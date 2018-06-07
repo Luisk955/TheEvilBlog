@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">    
     <title>Document</title>
 
     <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
@@ -14,12 +15,12 @@
 </head>
 
 <body>
-    <div>
+    <div class="title">
         <h1>The Evil Blog</h1>
     </div>
     <div id="posts"></div>
-    <div>
-        <legend>New post</legend>
+    <div class="newPost">
+        <h3>New post</h3>
         <input type="text" id="txtTitle" placeholder="Title">
         <textarea id="txtBody" name="" id="" cols="30" rows="10" placeholder="Body"></textarea>
         <button id="btnPost">Post</button>

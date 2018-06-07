@@ -20,6 +20,7 @@ function init(params) {
     btnPost.hidden = false;
     btnUpdate.hidden = true;
     btnDelete.hidden = true;
+    // element.classList.add("mystyle");
     // btnCancel.hidden = true;
 
 
