@@ -53,6 +53,8 @@ legend{
     padding: 2em;
     margin: 0 auto;
     margin-top: 2em;
+    margin-bottom: 2em;
+
 }
 
 .contPost {
@@ -72,6 +74,39 @@ p{
 
 }
 textarea{
+    margin-top: 1em;
     height: 5em;
-    width: 35%;
+    width: 100%;
+    border: 0.1em dotted gray;
+
+}
+input{
+    margin-top: 1em;
+    height: 1.9em;
+    width: 50%;
+    border: 0.1em dotted gray;
+}
+#btnPost{
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+    background-color: white; 
+    color: gray; 
+    border: 2px dotted gray;
+    width: 100%;
+}
+#btnPost:hover {
+    border: 2px dotted #4CAF50;
+    background-color: #4CAF50;
+    color: white;
+    
 }
