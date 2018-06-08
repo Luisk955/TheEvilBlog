@@ -17,7 +17,7 @@ class PostUI {
         if (this.post !== null) {
             this.titleTxt.innerText = this.post.title;
             this.bodyTxt.innerText = this.post.body;
-            this.timeStampTxt.innerText = this.post.owner + " " + this.post.timeStamp.getDate() + "-" + this.post.timeStamp.getMonth() + "-" + this.post.timeStamp.getFullYear();
+            this.timeStampTxt.innerText = this.post.owner + " " + this.post.timestamp.getDate() + "-" + this.post.timestamp.getMonth() + "-" + this.post.timestamp.getFullYear();
         }
         this.container.post = this.post;
         this.container.classList.add("contPost");

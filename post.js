@@ -1,15 +1,15 @@
 class Post {
-    constructor(pFbkey, pTitle, pBody, pOwner, pTimeStamp) {
+    constructor(pFbkey, pTitle, pBody, pOwner, pTimeStamp, pEditable) {
         this.fbKey = pFbkey;
         this.title = pTitle;
         this.body = pBody;
         this.owner = pOwner;
-        this.editable = true;
+        this.editable = pEditable;
 
         if (pTimeStamp === null) {
-            this.timeStamp = new Date();
+            this.timestamp = new Date();
         } else {
-            this.timeStamp = new Date(pTimeStamp);
+            this.timestamp = new Date(pTimeStamp);
         }
     }
 }
