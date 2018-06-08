@@ -7,8 +7,11 @@ function init(params) {
     var btnPost = document.getElementById('btnPost');
     var btnUpdate = document.getElementById('btnUpdate');
     var btnDelete = document.getElementById('btnDelete');
+    var btnCancel = document.getElementById('btnCancel');
+    var txtTitle = document.getElementById('txtTitle');
+    var txtBody = document.getElementById('txtBody');
     var owner = "Luisk";
-    // var btnCancel = document.getElementById('btnCancel');
+    var selectedPostUi = null;
 
 
 
@@ -20,16 +23,15 @@ function init(params) {
     btnPost.hidden = false;
     btnUpdate.hidden = true;
     btnDelete.hidden = true;
-    // element.classList.add("mystyle");
-    // btnCancel.hidden = true;
+    btnCancel.hidden = true;
 
+    // element.classList.add("mystyle");
 
     btnPost.onclick = createPost;
+    btnDelete.onclick = deletePost;
 
     function createPost() {
-        var txtTitle = document.getElementById('txtTitle').value;
-        var txtBody = document.getElementById('txtBody').value;
-        var post = new Post(0, txtTitle, txtBody, owner, new Date());
+        var post = new Post(0, txtTitle.value, txtBody.value, owner, new Date());
         // pId, pTitle, pBody, pOwner, pTimeStamp
 
         posts.push(post);
@@ -54,21 +56,57 @@ function init(params) {
         }
     }
 
+    function deletePost(event) {
+        if (confirm('¿Está seguro que desea eliminar el post?')) {
+            var url = 'https://theevilmouseblog.firebaseio.com/posts/' + selectedPostUi.post.fbKey + '.json';
+            var request = new XMLHttpRequest();
+            request.open('Delete', url, true);
+            request.onreadystatechange = deletePostCallback;
+            request.send();
+            removeSelectedPostStyle();
+        }
+    }
+
+    function deletePostCallback(event) {
+        var reques = event.target;
+        if (request.readyState === XMLHttpRequest.DONE) {
+            if (request.status === 200) {
+                requestAllPosts();
+            } else {
+                console.log('Error on request: ', request.status);
+            }
+        }
+    }
+
+    function selectPost(event) {
+        // removeSelectedPostStyle();
+        if (event.target.post) {
+            selectedPostUi = event.target;
+            txtTitle.value = selectedPostUi.post.title;
+            txtBody.value = selectedPostUi.post.body;
+            btnDelete.hidden = false;
+            btnUpdate.hidden = false;
+            btnCancel.hidden = false;
+            btnPost.hidden = true;
+
+            selectedPostUi.classList.add('selectedPost');
+        }
+    }
+
     function cleanUI() {
         txtTitle.value = '';
         txtBody.value = '';
     }
 
-
     function showPosts() {
         var postsContainer = document.getElementById('posts');
         postsContainer.innerHTML = "";
         posts.forEach(post => {
-            var post = new PostUI(post);
-            postsContainer.appendChild(post.container);
+            var postUI = new PostUI(post);
+            postUI.container.onclick = selectPost;
+            postsContainer.appendChild(postUI.container);
             console.log(post);
         });
-
     }
 
     function requestAllPosts() {
@@ -78,6 +116,42 @@ function init(params) {
         request.send();
     }
 
+    // function requestAllPostsCallBack(event) {
+    //     var request = event.target;
+    //     switch (request.readyState) {
+    //         case XMLHttpRequest.DONE:
+    //             console.log('DONE');
+    //             switch (request.status) {
+    //                 case 200:
+    //                     posts = [];
+    //                     var postsData = JSON.parse(request.responseText);
+    //                     for (const key in postsData) {
+    //                         var postData = postsData[key];
+    //                         var editable = false;
+    //                         if (postData.owner === owner) {
+    //                             editable = true;
+    //                         }
+
+    //                         var post = new Post(key, postData.title, postData.body, postData.owner, new Date(postData.timestamp), postData.editable);
+    //                         posts.push(post);
+    //                     }
+    //                     break;
+
+    //                 case 400:
+
+    //                     break;
+    //                 case 401:
+
+    //                     break;
+
+    //                 default:
+    //                     break;
+    //             }
+    //             break;
+    //     }
+    // }
+
+
     function requestAllPostsCallBack(event) {
         var request = event.target;
         if (request.readyState === XMLHttpRequest.DONE) {
@@ -86,10 +160,10 @@ function init(params) {
                 var postsData = JSON.parse(request.responseText);
                 for (const key in postsData) {
                     var postData = postsData[key];
-                    // var editable = false;
-                    // if (postData.owner === owner) {
-                    //     editable = true;
-                    // }
+                    var editable = false;
+                    if (postData.owner === owner) {
+                        editable = true;
+                    }
 
                     var post = new Post(key, postData.title, postData.body, postData.owner, new Date(postData.timestamp) /*, postData.editable*/ );
                     posts.push(post);

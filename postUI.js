@@ -13,7 +13,7 @@ class PostUI {
         this.container.appendChild(this.timeStampTxt);
         this.container.appendChild(this.bodyTxt);
 
-    // element.classList.add("mystyle");
+        // element.classList.add("mystyle");
         if (this.post !== null) {
             this.titleTxt.innerText = this.post.title;
             this.bodyTxt.innerText = this.post.body;
@@ -21,7 +21,5 @@ class PostUI {
         }
         this.container.post = this.post;
         this.container.classList.add("contPost");
-
-
     }
 }
